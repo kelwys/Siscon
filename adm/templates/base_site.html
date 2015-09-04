@@ -1,0 +1,51 @@
+{% extends "admin/base.html" %}
+{% load i18n admin_static %}
+
+{% block title %}{% if title %}{{ title }} | {% endif %}{{ site_title|default:_('Home') }}{% endblock %}
+{% block branding %}
+<h1 id="site-name"><a href="{% url 'admin:index' %}">{{ site_header|default:_('Siscon') }}</a></h1>
+{% endblock %}
+
+{% block context-navigation %}
+<!-- CONTEXT NAVIGATION -->
+<div id="grp-context-navigation">
+  <nav id="grp-breadcrumbs" class="{% block breadcrumbs-class %}{% endblock %}">
+    <header style="display:none"><h1>Breadcrumbs</h1></header>
+    {% block breadcrumbs %}
+      <ul>
+        <li><a style="background-image:none;" href="{% url 'home' %}">{% trans 'Home' %}</a></li>
+        {% if title %}
+          <li> &rsaquo; {{ title }}</li>
+        {% endif %}
+      </ul>
+    {% endblock %}
+  </nav>
+  <nav id="grp-page-tools">
+    <header style="display:none"><h1>Page Tools</h1></header>
+    {% block page-tools %}{% endblock %}
+  </nav>
+</div>
+{% endblock %}
+
+<!-- CONTENT -->
+{% block content-class %}content-grid{% endblock %}
+
+<!-- CONTENT-CONTAINER -->
+{% block content_title %}{% if title %}<h1>{{ title }}</h1>{% else %}<h1>{% trans 'Home' %}</h1>{% endif %}{% endblock %}
+
+<!-- CONTENT-CONTAINER -->
+{% block content %}
+  <div class="g-d-c">
+    <div class="g-d-12" id="apps_init">
+      <div class="grp-module" id="app_viewflow">
+        <h2>APPs</h2>
+        <div class="grp-row">
+          <a href="{% url 'wpr' %}"><strong>Controle de Pautas</strong></a>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% block filters %}{% endblock %}
+{% endblock %}
+
+{% block nav-global %}{% endblock %}
