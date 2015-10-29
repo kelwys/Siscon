@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/1.8/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/1.8/ref/settings/
 """
-
+from django.conf import global_settings
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
@@ -31,17 +31,22 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = (
+    # 'material',
+    # 'material.admin',
+    'jet.dashboard',
+    'jet',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'grappelli',
     'smart_selects',
     'localflavor',
     'mptt',
+    'sen',
     'adm',
+    
 )
 
 MIDDLEWARE_CLASSES = (
@@ -56,6 +61,10 @@ MIDDLEWARE_CLASSES = (
 )
 
 ROOT_URLCONF = 'Siscon.urls'
+
+TEMPLATE_CONTEXT_PROCESSORS = global_settings.TEMPLATE_CONTEXT_PROCESSORS + (
+    'django.core.context_processors.request',
+)
 
 TEMPLATES = [
     {
@@ -113,4 +122,4 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-GRAPPELLI_ADMIN_TITLE = 'Siscon - Gestão de Sensores'
+# GRAPPELLI_ADMIN_TITLE = 'Siscon - Gestão de Sensores'

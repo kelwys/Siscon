@@ -15,10 +15,24 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.conf.urls import patterns
+# urlpatterns =(
+#     '',
+#     url(r'^jet/', include('jet.urls', 'jet')),  # Django JET URLS
+#     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),  # Django JET dashboard URLS
+#     url(r'^admin/', include(admin.site.urls)),
+#     url(r'^chaining/', include('smart_selects.urls')),
+#     url(r'^adm/', include('adm.urls')),
+#     # url(r'^admin/', include(admin.site.urls)),
+# )
 
-urlpatterns = [
+admin.autodiscover()
+
+urlpatterns = patterns(
+    '',
+    url(r'^jet/', include('jet.urls', 'jet')),
+    url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin.site.urls)),
-    url(r'^chaining/', include('smart_selects.urls')),
-    url(r'^adm/', include('adm.urls')),
-    # url(r'^admin/', include(admin.site.urls)),
-]
+    # url(r'^ckeditor/', include('ckeditor.urls')),
+    # url(r'^tinymce/', include('tinymce.urls')),
+)
