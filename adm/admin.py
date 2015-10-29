@@ -2,10 +2,6 @@ from django.contrib import admin
 from adm.models import *
 
 
-class EMailInline(admin.TabularInline):
-    model = EMail
-    extra = 0
-
 
 class EnderecoInline(admin.StackedInline):
     model = Endereco
@@ -15,27 +11,26 @@ class EnderecoInline(admin.StackedInline):
     extra = 0
 
 
-class TelefoneInline(admin.TabularInline):
-    model = Telefone
-    # form = ChoiceTelefoneFormset
-    extra = 0
+
+class RegiaoAdmin(admin.ModelAdmin):
+    readonly_fields = ['identificador', ]
+    fieldsets = [
+        ('Dados Região', {'fields': [
+            'identificador', 'descricao']})]
 
 
 class PessoaAdmin(admin.ModelAdmin):
     # form = PessoaForm
     fieldsets = [
         ('Dados Pessoais', {'fields': [
-        	'foto', 'nome', 'sexo', 'cpf',
-			'data_nascimento', 'identidade',
-			'documento_profissional', 'nacionalidade',
-			'pais', 'estado', 'municipio', 'observacoes']}),
+            'nome', 'sexo', 'cpf',
+			'observacoes']}),
         ('Login', {'fields': ['user']})]
     inlines = [
-        TelefoneInline, EnderecoInline, EMailInline]
+        EnderecoInline]
 
-    list_display = ['nome', 'cpf', 'data_nascimento']
-    search_fields = ['nome', 'cpf', 'data_nascimento']
-    list_filter = ['nome', 'cpf', 'data_nascimento']
+    list_display = ['nome', 'cpf']
+    search_fields = ['nome', 'cpf']
     change_list_filter_template = "admin/filter_listing.html"
 
 admin.site.register(Pessoa, PessoaAdmin)
@@ -43,7 +38,7 @@ admin.site.register(Bairro)
 admin.site.register(Municipio)
 admin.site.register(Estado)
 admin.site.register(Pais)
-admin.site.register(TipoTelefone)
-admin.site.register(Regiao)
+admin.site.register(Endereco)
+admin.site.register(Regiao, RegiaoAdmin)
 
 # Register your models here.

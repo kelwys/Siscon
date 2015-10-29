@@ -2,8 +2,8 @@
 from __future__ import unicode_literals
 
 from django.db import models, migrations
-import smart_selects.db_fields
 from django.conf import settings
+import smart_selects.db_fields
 
 
 class Migration(migrations.Migration):
@@ -16,146 +16,155 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Bairro',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('bairro', models.CharField(verbose_name='Bairro', max_length=150)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('bairro', models.CharField(max_length=150, verbose_name='Bairro')),
             ],
             options={
-                'verbose_name': 'Bairro',
                 'verbose_name_plural': 'Bairros',
+                'verbose_name': 'Bairro',
             },
         ),
         migrations.CreateModel(
             name='EMail',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('email', models.EmailField(verbose_name='E-mail', max_length=60)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('email', models.EmailField(max_length=60, verbose_name='E-mail')),
                 ('ativo', models.BooleanField()),
             ],
             options={
-                'verbose_name': 'E-mail',
                 'verbose_name_plural': 'E-mails',
+                'verbose_name': 'E-mail',
             },
         ),
         migrations.CreateModel(
             name='Endereco',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('logradouro', models.CharField(null=True, max_length=150, blank=True)),
-                ('cep', models.CharField(null=True, max_length=10, blank=True)),
-                ('complemento', models.CharField(null=True, max_length=150, blank=True)),
-                ('bairro', smart_selects.db_fields.ChainedForeignKey(chained_model_field='municipio', chained_field='municipio', verbose_name='Bairro', auto_choose=True, null=True, blank=True, to='adm.Bairro')),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('logradouro', models.CharField(blank=True, max_length=150, null=True)),
+                ('cep', models.CharField(blank=True, max_length=10, null=True)),
+                ('complemento', models.CharField(blank=True, max_length=150, null=True)),
+                ('bairro', smart_selects.db_fields.ChainedForeignKey(blank=True, chained_field='municipio', to='adm.Bairro', auto_choose=True, chained_model_field='municipio', null=True, verbose_name='Bairro')),
             ],
             options={
-                'verbose_name': 'Endereço',
                 'verbose_name_plural': 'Endereços',
+                'verbose_name': 'Endereço',
             },
         ),
         migrations.CreateModel(
             name='Estado',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('estado', models.CharField(verbose_name='Estado', max_length=45)),
-                ('uf', models.CharField(verbose_name='UF', max_length=3)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('estado', models.CharField(max_length=45, verbose_name='Estado')),
+                ('uf', models.CharField(max_length=3, verbose_name='UF')),
             ],
             options={
-                'verbose_name': 'Estado',
                 'verbose_name_plural': 'Estados',
+                'verbose_name': 'Estado',
             },
         ),
         migrations.CreateModel(
             name='Municipio',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('municipio', models.CharField(verbose_name='Município', max_length=150)),
-                ('estado', models.ForeignKey(verbose_name='Estado', to='adm.Estado')),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('municipio', models.CharField(max_length=150, verbose_name='Município')),
+                ('estado', models.ForeignKey(to='adm.Estado', verbose_name='Estado')),
             ],
             options={
-                'verbose_name': 'Município',
                 'verbose_name_plural': 'Municípios',
+                'verbose_name': 'Município',
             },
         ),
         migrations.CreateModel(
             name='Pais',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('pais', models.CharField(verbose_name='País', max_length=100)),
-                ('sigla', models.CharField(verbose_name='Sigla', max_length=5)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('pais', models.CharField(max_length=100, verbose_name='País')),
+                ('sigla', models.CharField(max_length=5, verbose_name='Sigla')),
             ],
             options={
-                'verbose_name': 'País',
                 'verbose_name_plural': 'Países',
+                'verbose_name': 'País',
             },
         ),
         migrations.CreateModel(
             name='Pessoa',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('cpf', models.CharField(verbose_name='CPF', max_length=11)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('cpf', models.CharField(max_length=11, verbose_name='CPF')),
                 ('data_nascimento', models.DateField(verbose_name='Data de Nascimento')),
-                ('foto', models.ImageField(null=True, upload_to='', blank=True)),
                 ('nome', models.CharField(max_length=200)),
-                ('sexo', models.IntegerField()),
-                ('identidade', models.CharField(verbose_name='Identidade', null=True, max_length=45, blank=True)),
-                ('documento_profissional', models.CharField(verbose_name='Documento Profissional', null=True, max_length=45, blank=True)),
-                ('nacionalidade', models.IntegerField()),
-                ('observacoes', models.TextField(verbose_name='Observações', null=True, blank=True)),
-                ('estado', smart_selects.db_fields.ChainedForeignKey(chained_model_field='pais', verbose_name='Estado de Nascimento', auto_choose=True, chained_field='pais', to='adm.Estado')),
-                ('municipio', smart_selects.db_fields.ChainedForeignKey(chained_model_field='estado', verbose_name='Município de Nascimento', auto_choose=True, chained_field='estado', to='adm.Municipio')),
-                ('pais', models.ForeignKey(verbose_name='País de Nascimento', to='adm.Pais')),
-                ('user', models.OneToOneField(verbose_name='Usuário', to=settings.AUTH_USER_MODEL)),
+                ('sexo', models.IntegerField(choices=[('0', 'Masculino'), ('1', 'Feminino')])),
+                ('identidade', models.CharField(blank=True, max_length=45, null=True, verbose_name='Identidade')),
+                ('observacoes', models.TextField(blank=True, null=True, verbose_name='Observações')),
+                ('estado', smart_selects.db_fields.ChainedForeignKey(chained_field='pais', to='adm.Estado', auto_choose=True, chained_model_field='pais', verbose_name='Estado de Nascimento')),
+                ('municipio', smart_selects.db_fields.ChainedForeignKey(chained_field='estado', to='adm.Municipio', auto_choose=True, chained_model_field='estado', verbose_name='Município de Nascimento')),
+                ('pais', models.ForeignKey(to='adm.Pais', verbose_name='País de Nascimento')),
+                ('user', models.OneToOneField(to=settings.AUTH_USER_MODEL, verbose_name='Usuário')),
             ],
             options={
-                'verbose_name': 'Pessoa',
                 'verbose_name_plural': 'Pessoas',
+                'verbose_name': 'Pessoa',
+            },
+        ),
+        migrations.CreateModel(
+            name='Regiao',
+            fields=[
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('identificador', models.IntegerField(verbose_name='ID')),
+                ('descricao', models.CharField(max_length=45, verbose_name='Descrição')),
+            ],
+            options={
+                'verbose_name_plural': 'Regiões',
+                'verbose_name': 'Região',
             },
         ),
         migrations.CreateModel(
             name='Telefone',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('telefone', models.CharField(verbose_name='Telefone', max_length=20)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('telefone', models.CharField(max_length=20, verbose_name='Telefone')),
                 ('pessoa', models.ForeignKey(to='adm.Pessoa')),
             ],
             options={
-                'verbose_name': 'Telefone',
                 'verbose_name_plural': 'Telefones',
+                'verbose_name': 'Telefone',
             },
         ),
         migrations.CreateModel(
             name='TipoTelefone',
             fields=[
-                ('id', models.AutoField(auto_created=True, serialize=False, verbose_name='ID', primary_key=True)),
-                ('tipo_telefone', models.CharField(verbose_name='Tipo de Telefone', max_length=45)),
+                ('id', models.AutoField(primary_key=True, verbose_name='ID', auto_created=True, serialize=False)),
+                ('tipo_telefone', models.CharField(max_length=45, verbose_name='Tipo de Telefone')),
             ],
             options={
-                'verbose_name': 'Tipo de Telefone',
                 'verbose_name_plural': 'Tipos de Telefones',
+                'verbose_name': 'Tipo de Telefone',
             },
         ),
         migrations.AddField(
             model_name='telefone',
             name='tipo',
-            field=models.ForeignKey(verbose_name='Tipo', to='adm.TipoTelefone'),
+            field=models.ForeignKey(to='adm.TipoTelefone', verbose_name='Tipo'),
         ),
         migrations.AddField(
             model_name='estado',
             name='pais',
-            field=models.ForeignKey(verbose_name='País', to='adm.Pais'),
+            field=models.ForeignKey(to='adm.Pais', verbose_name='País'),
         ),
         migrations.AddField(
             model_name='endereco',
             name='estado',
-            field=smart_selects.db_fields.ChainedForeignKey(chained_model_field='pais', verbose_name='Estado', show_all=True, auto_choose=True, chained_field='pais', to='adm.Estado'),
+            field=smart_selects.db_fields.ChainedForeignKey(chained_field='pais', to='adm.Estado', auto_choose=True, show_all=True, chained_model_field='pais', verbose_name='Estado'),
         ),
         migrations.AddField(
             model_name='endereco',
             name='municipio',
-            field=smart_selects.db_fields.ChainedForeignKey(chained_model_field='estado', verbose_name='Município', auto_choose=True, chained_field='estado', to='adm.Municipio'),
+            field=smart_selects.db_fields.ChainedForeignKey(chained_field='estado', to='adm.Municipio', auto_choose=True, chained_model_field='estado', verbose_name='Município'),
         ),
         migrations.AddField(
             model_name='endereco',
             name='pais',
-            field=models.ForeignKey(verbose_name='País', to='adm.Pais'),
+            field=models.ForeignKey(to='adm.Pais', verbose_name='País'),
         ),
         migrations.AddField(
             model_name='endereco',
@@ -170,11 +179,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='bairro',
             name='estado',
-            field=models.ForeignKey(verbose_name='Estado', to='adm.Estado'),
+            field=models.ForeignKey(to='adm.Estado', verbose_name='Estado'),
         ),
         migrations.AddField(
             model_name='bairro',
             name='municipio',
-            field=smart_selects.db_fields.ChainedForeignKey(chained_model_field='estado', verbose_name='Município', auto_choose=True, chained_field='estado', to='adm.Municipio'),
+            field=smart_selects.db_fields.ChainedForeignKey(chained_field='estado', to='adm.Municipio', auto_choose=True, chained_model_field='estado', verbose_name='Município'),
         ),
     ]
