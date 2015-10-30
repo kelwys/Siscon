@@ -3,11 +3,11 @@ from adm.models import *
 
 
 
-class EnderecoInline(admin.StackedInline):
+class EnderecoInline(admin.TabularInline):
     model = Endereco
     # form = ChoiceEnderecoFormset
-    classes = ('collapse open',)
-    inline_classes = ('collapse open',)
+    # classes = ('collapse open',)
+    # inline_classes = ('collapse open',)
     extra = 0
 
 
@@ -31,7 +31,7 @@ class PessoaAdmin(admin.ModelAdmin):
 
     list_display = ['nome', 'cpf']
     search_fields = ['nome', 'cpf']
-    change_list_filter_template = "admin/filter_listing.html"
+    # change_list_filter_template = "admin/filter_listing.html"
 
 admin.site.register(Pessoa, PessoaAdmin)
 admin.site.register(Bairro)

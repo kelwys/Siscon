@@ -27,7 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
+JET_THEME = 'default'
 # Application definition
 
 INSTALLED_APPS = (

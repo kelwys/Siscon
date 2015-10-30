@@ -33,6 +33,7 @@ urlpatterns = patterns(
     url(r'^jet/', include('jet.urls', 'jet')),
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin.site.urls)),
+    url(r'^chaining/', include('smart_selects.urls')),
     # url(r'^ckeditor/', include('ckeditor.urls')),
     # url(r'^tinymce/', include('tinymce.urls')),
 )
