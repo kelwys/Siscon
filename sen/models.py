@@ -1,5 +1,6 @@
 from django.db import models
 from adm.models import Regiao, Municipio
+from adaptor.model import CsvModel
 
 class TipoSensor(models.Model):
     descricao = models.CharField(
@@ -36,6 +37,28 @@ class Sensor(models.Model):
     class Meta:
         verbose_name = 'Sensor'
         verbose_name_plural = 'Sensores'
+
+    def __str__(self):
+        return self.nome
+
+# class MyCSvModel(CsvModel):
+#     nome = models.CharField()
+#     data_hora = models.DateTimeField()
+#     valor = models.DecimalField()
+
+#     class Meta:
+#         delimiter = ";"
+#         dbModel = DadosSensores
+
+
+class DadosSensores(models.Model):
+    nome = models.ForeignKey(Sensor, verbose_name='Nome')
+    data_hora = models.DateTimeField(verbose_name='Data e hora')
+    valor = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Valor')
+
+    class Meta:
+        verbose_name = 'Dados do Sensor'
+        verbose_name_plural = 'Dados dos Sensores'
 
     def __str__(self):
         return self.nome
