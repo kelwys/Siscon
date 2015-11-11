@@ -46,6 +46,7 @@ INSTALLED_APPS = (
     'mptt',
     'sen',
     'adm',
+    'importcsvadmin',
     
 )
 

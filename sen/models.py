@@ -1,6 +1,7 @@
 from django.db import models
 from adm.models import Regiao, Municipio
-from adaptor.model import CsvModel
+from datetime import datetime
+from smart_selects.db_fields import ChainedForeignKey
 
 class TipoSensor(models.Model):
     descricao = models.CharField(
@@ -13,10 +14,10 @@ class TipoSensor(models.Model):
     def __str__(self):
         return self.descricao
 
-
+# TODO: Colocar forengkey de tipo de sensor no model UnidadeMedida. Configurar smartselect
 class UnidadeMedida(models.Model):
-    descricao = models.CharField(
-        max_length=45, verbose_name='Unidade')
+    tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
+    descricao = models.CharField(max_length=45, verbose_name='Unidade')
 
     class Meta:
         verbose_name = 'Unidade de Medida'
@@ -27,10 +28,12 @@ class UnidadeMedida(models.Model):
 
 
 class Sensor(models.Model):
-    nome = models.CharField(max_length=45, verbose_name='Nome')
+    tag = models.CharField(primary_key=True, unique=True, max_length=45)
     tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
-    regiao = models.ForeignKey(Regiao, verbose_name='Região')
-    unidade = models.ForeignKey(UnidadeMedida, verbose_name='Unidade de Medida')
+    unidade = ChainedForeignKey(UnidadeMedida, "tipo")
+    # unidade = ChainedForeignKey(UnidadeMedida, chained_field="tipo",
+    #     chained_model_field="tipo", show_all=False,
+    #     auto_choose=True, verbose_name='Unidade de Medida')
     faixa_valor = models.CharField(max_length=45, verbose_name='Faixa de Valores')
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
 
@@ -39,20 +42,12 @@ class Sensor(models.Model):
         verbose_name_plural = 'Sensores'
 
     def __str__(self):
-        return self.nome
-
-# class MyCSvModel(CsvModel):
-#     nome = models.CharField()
-#     data_hora = models.DateTimeField()
-#     valor = models.DecimalField()
-
-#     class Meta:
-#         delimiter = ";"
-#         dbModel = DadosSensores
+        return self.tag
 
 
+# TODO: Configurar campos readonly no modo de edição
 class DadosSensores(models.Model):
-    nome = models.ForeignKey(Sensor, verbose_name='Nome')
+    tag = models.ForeignKey(Sensor, default='01', verbose_name='Tag')
     data_hora = models.DateTimeField(verbose_name='Data e hora')
     valor = models.DecimalField(max_digits=6, decimal_places=2, verbose_name='Valor')
 
@@ -61,4 +56,6 @@ class DadosSensores(models.Model):
         verbose_name_plural = 'Dados dos Sensores'
 
     def __str__(self):
-        return self.nome
+        return self.tag.tag
+
+
