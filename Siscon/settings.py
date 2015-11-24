@@ -47,7 +47,9 @@ INSTALLED_APPS = (
     'sen',
     'adm',
     'importcsvadmin',
-    
+    'input_mask',
+    'django_csv_exports',
+
 )
 
 MIDDLEWARE_CLASSES = (
