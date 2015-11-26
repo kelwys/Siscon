@@ -1,7 +1,7 @@
 from django.db import models
-from adm.models import Regiao, Municipio
-from datetime import datetime
+from adm.models import Regiao, Municipio, Endereco
 from smart_selects.db_fields import ChainedForeignKey
+
 
 class TipoSensor(models.Model):
     descricao = models.CharField(
@@ -14,9 +14,9 @@ class TipoSensor(models.Model):
     def __str__(self):
         return self.descricao
 
+
 # TODO: Colocar forengkey de tipo de sensor no model UnidadeMedida. Configurar smartselect
 class UnidadeMedida(models.Model):
-    tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
     descricao = models.CharField(max_length=45, verbose_name='Unidade')
 
     class Meta:
@@ -30,12 +30,11 @@ class UnidadeMedida(models.Model):
 class Sensor(models.Model):
     tag = models.CharField(primary_key=True, unique=True, max_length=45)
     tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
-    unidade = ChainedForeignKey(UnidadeMedida, "tipo")
-    # unidade = ChainedForeignKey(UnidadeMedida, chained_field="tipo",
-    #     chained_model_field="tipo", show_all=False,
-    #     auto_choose=True, verbose_name='Unidade de Medida')
-    faixa_valor = models.CharField(max_length=45, verbose_name='Faixa de Valores')
+    unidade = ChainedForeignKey(UnidadeMedida, verbose_name='Unidade de Medida')
+    valor_min = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Minimo')
+    valor_max = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Maximo')
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
+    endereco = models.ForeignKey(Endereco, verbose_name='Endereço')
 
     class Meta:
         verbose_name = 'Sensor'
@@ -57,5 +56,3 @@ class DadosSensores(models.Model):
 
     def __str__(self):
         return self.tag.tag
-
-

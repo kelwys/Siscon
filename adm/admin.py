@@ -13,10 +13,10 @@ class EnderecoInline(admin.TabularInline):
 
 
 class RegiaoAdmin(admin.ModelAdmin):
-    readonly_fields = ['identificador', ]
+    # readonly_fields = ['identificador', ]
     fieldsets = [
         ('Dados Região', {'fields': [
-            'identificador', 'descricao']})]
+            'descricao']})]
 
 
 class PessoaAdmin(admin.ModelAdmin):
@@ -26,8 +26,6 @@ class PessoaAdmin(admin.ModelAdmin):
             'nome', 'sexo', 'cpf',
 			'observacoes']}),
         ('Login', {'fields': ['user']})]
-    inlines = [
-        EnderecoInline]
 
     list_display = ['nome', 'cpf']
     search_fields = ['nome', 'cpf']

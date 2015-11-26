@@ -3,10 +3,12 @@ from smart_selects.db_fields import ChainedForeignKey
 from django.db.models import signals
 from django.contrib.auth.models import User
 from django.db.models import F, Sum, Max, FloatField, ExpressionWrapper
+
 # from sen.models import Sensor
 # Create your models here.
 
 GENERO = (('0', 'Masculino'), ('1', 'Feminino'))
+
 
 class Pais(models.Model):
     pais = models.CharField(max_length=100, verbose_name='País')
@@ -33,8 +35,32 @@ class Estado(models.Model):
         return self.estado
 
 
+class Regiao(models.Model):
+    descricao = models.CharField(
+        max_length=45, verbose_name='Descrição')
+
+    class Meta:
+        verbose_name = 'Região'
+        verbose_name_plural = 'Regiões'
+
+    # def gerar_identificador_regiao(self):
+    #     if self.identificador is None:
+    #         self.identificador = 1
+    #         if Regiao.objects.exists():
+    #             self.identificador = Regiao.objects.all().aggregate(
+    #                 Max('identificador')).get('identificador__max') + 1
+    #
+    # def save(self):
+    #     self.gerar_identificador_regiao()
+    #     super(Regiao, self).save()
+
+    def __str__(self):
+        return self.descricao
+
+
 class Municipio(models.Model):
     estado = models.ForeignKey(Estado, verbose_name='Estado')
+    regiao = models.ForeignKey(Regiao, verbose_name='Região')
     municipio = models.CharField(max_length=150, verbose_name='Município')
 
     class Meta:
@@ -47,7 +73,6 @@ class Municipio(models.Model):
 
 class Bairro(models.Model):
     bairro = models.CharField(max_length=150, verbose_name='Bairro')
-    estado = models.ForeignKey(Estado, verbose_name='Estado')
     municipio = ChainedForeignKey(
         Municipio, chained_field="estado",
         chained_model_field="estado",
@@ -61,29 +86,17 @@ class Bairro(models.Model):
         return self.bairro
 
 
-class Regiao(models.Model):
-    identificador = models.IntegerField(verbose_name='ID')
-    descricao = models.CharField(
-        max_length=45, verbose_name='Descrição')
+class Endereco(models.Model):
+    bairro = models.ForeignKey(Bairro, verbose_name='Bairro')
+    logradouro = models.CharField(blank=True, null=True, max_length=150)
+    cep = models.CharField(blank=True, null=True, max_length=10)
 
     class Meta:
-        verbose_name = 'Região'
-        verbose_name_plural = 'Regiões'
-
-    def gerar_identificador_regiao(self):
-        if self.identificador is None:
-            self.identificador = 1
-            if Regiao.objects.exists():
-                self.identificador = Regiao.objects.all().aggregate(
-                    Max('identificador')).get('identificador__max') + 1
-
-    def save(self):
-        self.gerar_identificador_regiao()
-        super(Regiao, self).save()
-
+        verbose_name = 'Endereço'
+        verbose_name_plural = 'Endereços'
 
     def __str__(self):
-        return self.descricao
+        return str(self.tipo)
 
 
 class Pessoa(models.Model):
@@ -93,6 +106,7 @@ class Pessoa(models.Model):
     observacoes = models.TextField(
         blank=True, null=True, verbose_name='Observações')
     user = models.OneToOneField(User, verbose_name='Usuário')
+    endereco = models.ForeignKey(Endereco, verbose_name='Endereço')
 
     @staticmethod
     def beforeinsert(sender, instance, **kwargs):
@@ -122,38 +136,3 @@ signals.pre_save.connect(Pessoa.beforeinsert, sender=Pessoa)
 signals.post_save.connect(Pessoa.afterinsert, sender=Pessoa)
 signals.pre_delete.connect(Pessoa.beforedelete, sender=Pessoa)
 signals.post_delete.connect(Pessoa.afterdelete, sender=Pessoa)
-
-
-class Endereco(models.Model):
-    pessoa = models.ForeignKey(Pessoa, blank=True, null=True)
-    # sensor = models.ForeignKey(Sensor, blank=True, null=True)
-    pais = models.ForeignKey(Pais, verbose_name='País')
-    estado = ChainedForeignKey(Estado,
-                               chained_field="pais",
-                               chained_model_field="pais",
-                               show_all=True,
-                               auto_choose=True,
-                               verbose_name='Estado')
-    municipio = ChainedForeignKey(Municipio,
-                                  chained_field="estado",
-                                  chained_model_field="estado",
-                                  show_all=False,
-                                  auto_choose=True,
-                                  verbose_name='Município')
-    bairro = ChainedForeignKey(Bairro, chained_field="municipio",
-                               chained_model_field="municipio",
-                               show_all=False,
-                               auto_choose=True,
-                               blank=True, null=True,
-                               verbose_name='Bairro')
-    logradouro = models.CharField(blank=True, null=True, max_length=150)
-    cep = models.CharField(blank=True, null=True, max_length=10)
-
-    class Meta:
-        verbose_name = 'Endereço'
-        verbose_name_plural = 'Endereços'
-
-    def __str__(self):
-        return str(self.tipo)
-
-
