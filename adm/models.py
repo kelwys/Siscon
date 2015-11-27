@@ -73,10 +73,7 @@ class Municipio(models.Model):
 
 class Bairro(models.Model):
     bairro = models.CharField(max_length=150, verbose_name='Bairro')
-    municipio = ChainedForeignKey(
-        Municipio, chained_field="estado",
-        chained_model_field="estado",
-        show_all=False, auto_choose=True, verbose_name='Município')
+    municipio = models.ForeignKey(Municipio, verbose_name='Município')
 
     class Meta:
         verbose_name = 'Bairro'
@@ -96,7 +93,7 @@ class Endereco(models.Model):
         verbose_name_plural = 'Endereços'
 
     def __str__(self):
-        return str(self.tipo)
+        return self.logradouro
 
 
 class Pessoa(models.Model):

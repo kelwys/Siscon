@@ -30,7 +30,7 @@ class UnidadeMedida(models.Model):
 class Sensor(models.Model):
     tag = models.CharField(primary_key=True, unique=True, max_length=45)
     tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
-    unidade = ChainedForeignKey(UnidadeMedida, verbose_name='Unidade de Medida')
+    unidade = models.ForeignKey(UnidadeMedida, verbose_name='Unidade de Medida')
     valor_min = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Minimo')
     valor_max = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Maximo')
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
