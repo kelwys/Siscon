@@ -25,6 +25,7 @@ from django.conf.urls import patterns
 #     url(r'^adm/', include('adm.urls')),
 #     # url(r'^admin/', include(admin.site.urls)),
 # )
+from django.conf import settings
 
 admin.autodiscover()
 
@@ -34,6 +35,13 @@ urlpatterns = patterns(
     url(r'^jet/dashboard/', include('jet.dashboard.urls', 'jet-dashboard')),
     url(r'^admin/', include(admin.site.urls)),
     url(r'^chaining/', include('smart_selects.urls')),
-    # url(r'^ckeditor/', include('ckeditor.urls')),
+    url(r'^home/', include('home.urls')),
+    url(r'^static/(?P<path>.*)$',
+        'django.views.static.serve',
+        { 'document_root': settings.STATIC_ROOT, }),
+    url(r'^media/(?P<path>.*)$',
+        'django.views.static.serve',
+        { 'document_root': settings.MEDIA_ROOT, }),
+
     # url(r'^tinymce/', include('tinymce.urls')),
 )
