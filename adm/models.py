@@ -35,6 +35,7 @@ class Estado(models.Model):
         return self.estado
 
 
+# TODO: Criar campo Ativo
 class Regiao(models.Model):
     descricao = models.CharField(
         max_length=45, verbose_name='Descrição')

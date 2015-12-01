@@ -7,8 +7,8 @@ from django_csv_exports.admin import CSVExportAdmin
 
 
 class DadosSensorAdminImporter(forms.ModelForm):
-    data_hora = forms.DateField(widget=forms.DateInput(format = '%Y%m%d %H:%M'),
-                                 input_formats=('%Y%m%d %H:%M',))
+    data_hora = forms.DateField(widget=forms.DateInput(format='%Y%m%d %H:%M'),
+                                input_formats=('%Y%m%d %H:%M',))
     valor = DecimalField(max_digits=6, decimal_places=2, localize=True)
 
     class Meta:
@@ -27,8 +27,11 @@ class DadosSensoresAdmin(ImportCSVModelAdmin, CSVExportAdmin):
     tag__municipio.short_description = u'Municipio'
 
 
+class SensorAdmin(admin.ModelAdmin):
+    list_display = ('tag', 'municipio', 'tipo', 'unidade', 'valor_min', 'valor_max')
+
 
 admin.site.register(TipoSensor)
 admin.site.register(UnidadeMedida)
-admin.site.register(Sensor)
+admin.site.register(Sensor, SensorAdmin)
 admin.site.register(DadosSensores, DadosSensoresAdmin)
