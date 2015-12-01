@@ -41,7 +41,6 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'smart_selects',
     'localflavor',
     'mptt',
     'sen',
@@ -50,7 +49,7 @@ INSTALLED_APPS = (
     'importcsvadmin',
     'input_mask',
     'django_csv_exports',
-
+    'admin_highcharts',
 )
 
 MIDDLEWARE_CLASSES = (

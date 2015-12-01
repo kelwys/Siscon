@@ -1,8 +1,7 @@
 Django==1.8.3
-django-easy-select2==1.2.12
 django-localflavor==1.1
 django-mptt==0.7.4
-git+https://github.com/digi604/django-smart-selects.git#egg=smart_selects
+django-input-mask==1.6.1
 feedparser==5.2.1
 FeinCMS==1.11.0
 flake8==2.4.1
