@@ -16,6 +16,6 @@ O projeto reunirá dados e disponibilizará os tais como informação relevante 
 Screenshots
 ===========
 
-.. image:: https://raw.githubusercontent.com/kelwys/Siscon/static/screen1.png
+.. image:: https://raw.github.com/kelwys/Siscon/static/screen1.png
     :alt: Screenshot #1
     :align: center
