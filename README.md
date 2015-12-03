@@ -15,4 +15,4 @@ O projeto reunirá dados e disponibilizará os tais como informação relevante 
 
 Screenshots
 ===========
-![alt tag](https://raw.github.com/kelwys/Siscon/static/screen1.png)
+![alt text](static/screen1.png "Tela de relatório")
