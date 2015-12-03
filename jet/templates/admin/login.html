@@ -20,6 +20,9 @@
         <div class="login-container-header">
             {% trans "Log in" %}
         </div>
+        <div class="login-container-message">
+            <p>Para Relatório use "<strong>convidado</strong>" para Usuário e Senha</p>
+        </div>
         <div class="login-container-content">
             <form action="{{ app_path }}" method="post" class="login-form" id="login-form">{% csrf_token %}
                 {% if form.errors and not form.non_field_errors %}
