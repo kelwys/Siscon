@@ -13,3 +13,6 @@ Os dados cadatrados poderão a qualquer momento serem desabilitados pelo usuario
 Haverão dois tipos de perfis de usuarios do sistema. O administrador que possuirá função para cadastrar e desabilitar sensores, regiões e usuários administradores e acesso a geração de relatórios. Os usuários comuns terão apenas a geração do relatórios como opção de utilização do sistema.
 O projeto reunirá dados e disponibilizará os tais como informação relevante a usuários, isentando os mesmo de buscas interminváveis por informações dispersas, evitando assim a inconsistência de dados e facilitando o trabalho dos utilazadores da ferramenta, visto que terão fácil acesso a dados e historicos de sensores de diversas regiões e em tempo bem próximo do real, permitindo montagem de relatório com recursos de gráficos e seleção de filtros ideais a sua necessidade. 
 
+Screenshots
+===========
+![alt text](static/screen1.png "Tela de relatório")

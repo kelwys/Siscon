@@ -15,7 +15,6 @@ class TipoSensor(models.Model):
         return self.descricao
 
 
-# TODO: Colocar forengkey de tipo de sensor no model UnidadeMedida. Configurar smartselect
 class UnidadeMedida(models.Model):
     descricao = models.CharField(max_length=45, verbose_name='Unidade')
 
@@ -27,6 +26,7 @@ class UnidadeMedida(models.Model):
         return self.descricao
 
 
+# TODO: Criar campo Ativo
 class Sensor(models.Model):
     tag = models.CharField(primary_key=True, unique=True, max_length=45)
     tipo = models.ForeignKey(TipoSensor, verbose_name='Tipo de Sensor')
@@ -34,7 +34,6 @@ class Sensor(models.Model):
     valor_min = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Minimo')
     valor_max = models.DecimalField(decimal_places=2, max_digits=6, verbose_name='Valor Maximo')
     municipio = models.ForeignKey(Municipio, verbose_name='Municipio')
-    endereco = models.ForeignKey(Endereco, verbose_name='Endereço')
 
     class Meta:
         verbose_name = 'Sensor'
