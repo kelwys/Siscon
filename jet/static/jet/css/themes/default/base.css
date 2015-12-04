@@ -4644,7 +4644,7 @@ ul.object-tools {
       ul.object-tools li a, ul.object-tools li a:visited, ul.object-tools li a:hover {
         color: #6f7e95; }
       ul.object-tools li a:hover {
-        background-color: #639af5;
+        background-color: #00695C;
         color: #fff; }
         ul.object-tools li a:hover.addlink:before {
           color: #fff; }
