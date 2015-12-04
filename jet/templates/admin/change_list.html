@@ -45,12 +45,16 @@
       {% if has_add_permission %}
         <ul class="object-tools fr">
           {% block object-tools-items %}
+          <!-- Remove o botão adicionar da tela dados de sensores -->
+          {% if module_name != 'Dados dos Sensores' %}
             <li>
               {% url cl.opts|admin_urlname:'add' as add_url %}
               <a href="{% jet_add_preserved_filters add_url is_popup to_field %}" class="addlink">
                 {% blocktrans with cl.opts.verbose_name as name %}Add {{ name }}{% endblocktrans %}
               </a>
             </li>
+          {% endif %} 
+          
           {% endblock %}
         </ul>
       {% endif %}
