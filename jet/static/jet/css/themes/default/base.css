@@ -1450,7 +1450,7 @@ a:hover {
         font-size: 16px; }
       .sidebar-menu-item-list-item-link, .sidebar-menu-item-list-item-link:visited, .sidebar-menu-item-list-item-link:hover {
         display: block;
-        color: #b0bec5;
+        color: #FFFFFF;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -1873,11 +1873,11 @@ a:hover {
     font-weight: bold;
     line-height: 32px; }
     .top-breadcrumbs a, .top-breadcrumbs a:visited, .top-breadcrumbs a:hover {
-      color: #c0d4e8;
+      color: #888888;
       text-decoration: none;
       word-spacing: normal; }
     .top-breadcrumbs a:hover {
-      color: #639af5; }
+      color: #00695C; }
     .top-breadcrumbs-separator {
       color: #c0d4e8;
       margin: 0 6px 0 6px;
@@ -3407,14 +3407,14 @@ table#change-history {
         border-bottom: 2px solid transparent;
         position: relative;
         top: 2px;
-        color: #d0dbe6;
+        color: #6f7e95;
         font-weight: bold;
         font-size: 11px;
         text-transform: uppercase; }
       .changeform-tabs-item a:hover {
         color: #6f7e95; }
       .changeform-tabs-item.selected a, .changeform-tabs-item.selected a:hover, .changeform-tabs-item.selected a:visited {
-        color: #6f7e95;
+        color: #111;
         border-color: #639af5; }
       .changeform-tabs-item.errors a, .changeform-tabs-item.errors a:hover, .changeform-tabs-item.errors a:visited {
         border-color: #c14747; }
