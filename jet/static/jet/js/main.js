@@ -488,6 +488,11 @@
                         e.preventDefault();
                     });
                 });
+                var old_goToToday = $.datepicker._gotoToday;
+                $.datepicker._gotoToday = function(id) {
+                    old_goToToday.call(this,id);
+                    this._selectDate(id);
+                };
             };
 
             var initTimeWidget = function() {
