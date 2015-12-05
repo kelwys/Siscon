@@ -17,12 +17,12 @@ class DadosSensorAdminImporter(forms.ModelForm):
         fields = ('tag', 'data_hora', 'valor')
 
 
-# TODO: Resolver problema do ImportCSVModelAdmin com HighchartsModelAdmin no mesmo modelo.
 class DadosSensoresAdmin(HighchartsModelAdmin, CSVExportAdmin):
     importer_class = DadosSensorAdminImporter
     list_filter = ['tag', 'tag__municipio', 'data_hora']
     list_display = ['tag', 'tag__municipio', 'data_hora', 'valor']
     csv_fields = ['tag', 'data_hora', 'valor']
+    readonly_fields = list_display
     # chart_type = 'spline'
     chart_category_name = 'data_hora'
     chart_serial_names = ('valor',)
@@ -31,9 +31,15 @@ class DadosSensoresAdmin(HighchartsModelAdmin, CSVExportAdmin):
         return obj.tag.municipio.municipio
     tag__municipio.short_description = u'Municipio'
 
+    def has_delete_permission(self, request, obj=None):
+        return False
+
 
 class SensorAdmin(admin.ModelAdmin):
     list_display = ('tag', 'municipio', 'tipo', 'unidade', 'valor_min', 'valor_max')
+
+    def has_delete_permission(self, request, obj=None):
+        return False
 
 
 admin.site.register(TipoSensor)
