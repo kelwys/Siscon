@@ -113,12 +113,13 @@ LANGUAGE_CODE = 'pt-BR'
 TIME_ZONE = 'America/Sao_Paulo'
 
 USE_I18N = True
-DATE_FORMAT  = 'd/m/Y'
+DATE_FORMAT = 'd/m/Y'
 TIME_FORMAT = 'H:i'
 USE_L10N = False
 
 USE_TZ = True
 
+DATETIME_FORMAT = 'd-m-y H:i'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.8/howto/static-files/
