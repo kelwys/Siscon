@@ -1,4 +1,4 @@
-Django==1.8.3
+Django==1.11.29
 django-localflavor==1.1
 django-mptt==0.7.4
 django-input-mask==1.6.1
